@@ -1,0 +1,7 @@
+pyttsx3
+pyaudio
+speechRecognition
+pocketsphinx
+smtplib
+wikipedia
+psutil
