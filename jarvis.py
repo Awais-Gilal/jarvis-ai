@@ -131,6 +131,7 @@ def close_program(program_name):
     except Exception as e:
         print(e)
         speak(f"an error accored while terminateing {program_name}")
+#empity commit
 
 def run_main():
     wishme()
