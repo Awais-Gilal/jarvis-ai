@@ -8,10 +8,11 @@ try:
     import requests
     import wikipedia
     import psutil
+
 except ImportError:
     import os
-    #lib_list = ["pyttsx3", "pyaudio", "speechRecognition", "pocketsphinx" "smtplib" "wikipedia" "psutil"]
-    os.system('pip install speechRecognition pyttsx3 pyaudio pocketsphinx smtplib wikipedia psutil')
+    os.system('pip install speechRecognition  wikipedia pocketsphinx smtplib  psutil pyttsx3 pyaudio')
+
 finally:
     import pyttsx3
     import datetime
@@ -78,7 +79,7 @@ def check_internet():
     try:
         requests.get("https://www.google.com/")
     except:
-        return False
+        return True #False
     else:
         return True
 
@@ -119,8 +120,8 @@ def open_office_word():
     except FileNotFoundError:
         speak("File Does not exists")
 
-
 def close_program(program_name):
+    pass
     try:
         for process in psutil.porcess_iter(['pid', 'name']):
             if process.info['name'].lower() == program_name.lower():
@@ -133,12 +134,21 @@ def close_program(program_name):
 
 def run_main():
     wishme()
-    while True:
+    if True:
         if check_internet():
-            # command = takecommand().lower()
-            command = "close music player"
+            command = takecommand().lower()
+            # command = "close music player"
             if "the time" in command:
                 say_time()
+            elif "according to wikipedia" in command:
+                speak(command_to_wikipedia(command))
+
+            elif "are you listening" in command or "are you there" in command or "are you their" in command:
+                speak("I am listening you. Please tell me how can i assist you")
+            elif "thanks jarvis" in command:
+                speak("You welcome sir, please inform me if you have any querstion")
+
+            #opening browsers and apps====================
             elif "open google" in command:
                 webbrowser.open("google.com")
             elif "open youtube" in command:
@@ -147,28 +157,24 @@ def run_main():
                 webbrowser.open("gmail.com")
             elif "open stakoverflow" in command:
                 webbrowser.open("stakeoverflow.com")
-            elif "open ai" in command:
+            elif "open ai" in command or "chat gpt" in command or "chatgpt" in command:
                 webbrowser.open("https://chat.openai.com/")
-            elif "open github" in command:
+            elif "open github" in command or "open git" in command:
                 webbrowser.open("github.com")
+            #========================================
+            elif "open microsoft office word" in command or "ms word" in command:
+                open_office_word()
+            elif "open code" in command or "vs code" in command or "visual studio code" in command:
+                open_vscode()
+
+            # playing musics videos =========================
             elif "play music" in command:
                 play_random_music()
-            elif "open microsoft office word" in command:
-                open_office_word()
-            elif "open code" in command:
-                open_vscode()
-            elif "are you listening" in command:
-                speak("I am listening you. Please tell me how can i assist you")
-            elif "thanks jarvis" in command:
-                speak("You welcome sir, please inform me if you have any querstion")
-            elif "according to wikipedia" in command:
-                speak(command_to_wikipedia(command))
 
+            #closeing programs commands ============================
             elif "close music player" in command:
-                close_program("music player")
-
-            #===================================
-            elif "quite" in command or "exit" in command or "close program" in command:
+                close_program("Groov Music")
+            elif "quite" in command or "exit" in command:
                 speak("Thanks for using me. Good bye.")
                 exit()
             else:
